@@ -11,6 +11,10 @@ interface GameOverRequestBody {
     pillsSwallowed: number;
 }
 
+interface HighscoreResult {
+  highscore: number | null; 
+}
+
 router.post('/api/gameover', async (req: Request<unknown, unknown, GameOverRequestBody>, res: Response) => {
     const { playerID, points, ghostsEaten, levelsWon, pillsSwallowed } = req.body;
     if (playerID !== null && playerID !== undefined &&
@@ -32,6 +36,26 @@ router.post('/api/gameover', async (req: Request<unknown, unknown, GameOverReque
         }
     } else {
         res.status(400).json({ message: 'Fehlende Daten.' });
+    }
+});
+
+router.get('/api/gameover', async (req: Request, res: Response) => {
+    const playerID = req.query.playerID;
+    if (!playerID) {
+        res.status(400).json({ message: 'playerID fehlt.' });
+        return;
+    } else {
+        try {
+            const result = await db.query<HighscoreResult>(
+                'SELECT MAX(points) AS highscore FROM scores WHERE player_id = $1;',
+                [playerID]
+            );
+            res.status(200).json(result.rows[0].highscore);
+            console.log('Highscore für playerID', playerID, ':', result.rows[0].highscore);
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ message: 'Fehler beim Abrufen der Daten.' });
+        }
     }
 });
 
