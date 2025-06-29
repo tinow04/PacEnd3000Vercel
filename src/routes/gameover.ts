@@ -11,8 +11,8 @@ interface GameOverRequestBody {
     pillsSwallowed: number;
 }
 
-interface HighscoreRequestBody {
-    playerID: number;
+interface HighscoreResult {
+  highscore: number | null; 
 }
 
 router.post('/api/gameover', async (req: Request<unknown, unknown, GameOverRequestBody>, res: Response) => {
@@ -39,14 +39,14 @@ router.post('/api/gameover', async (req: Request<unknown, unknown, GameOverReque
     }
 });
 
-router.get('/api/gameover', async (req: Request<unknown, unknown, HighscoreRequestBody>, res: Response) => {
+router.get('/api/gameover', async (req: Request, res: Response) => {
     const playerID = req.query.playerID;
     if (!playerID) {
         res.status(400).json({ message: 'playerID fehlt.' });
         return;
     } else {
         try {
-            const result = await db.query(
+            const result = await db.query<HighscoreResult>(
                 'SELECT MAX(points) AS highscore FROM scores WHERE player_id = $1;',
                 [playerID]
             );
