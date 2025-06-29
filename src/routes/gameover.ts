@@ -11,6 +11,10 @@ interface GameOverRequestBody {
     pillsSwallowed: number;
 }
 
+interface HighscoreRequestBody {
+    playerID: number;
+}
+
 router.post('/api/gameover', async (req: Request<unknown, unknown, GameOverRequestBody>, res: Response) => {
     const { playerID, points, ghostsEaten, levelsWon, pillsSwallowed } = req.body;
     if (playerID !== null && playerID !== undefined &&
@@ -35,7 +39,7 @@ router.post('/api/gameover', async (req: Request<unknown, unknown, GameOverReque
     }
 });
 
-router.get('/api/gameover', async (req: Request, res: Response) => {
+router.get('/api/gameover', async (req: Request<unknown, unknown, HighscoreRequestBody>, res: Response) => {
     const playerID = req.query.playerID;
     if (!playerID) {
         res.status(400).json({ message: 'playerID fehlt.' });
