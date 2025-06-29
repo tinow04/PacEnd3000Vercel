@@ -3,8 +3,16 @@ import { db } from '../db/db';
 
 const router = Router();
 
-router.post('/api/gameover', async (req: Request, res: Response) => {
-    const {playerID, points, ghostsEaten, levelsWon, pillsSwallowed } = req.body;
+interface GameOverRequestBody {
+    playerID: number;
+    points: number;
+    ghostsEaten: number;
+    levelsWon: number;
+    pillsSwallowed: number;
+}
+
+router.post('/api/gameover', async (req: Request<unknown, unknown, GameOverRequestBody>, res: Response) => {
+    const { playerID, points, ghostsEaten, levelsWon, pillsSwallowed } = req.body;
     if (playerID !== null && playerID !== undefined &&
         points !== null && points !== undefined &&
         ghostsEaten !== null && ghostsEaten !== undefined &&
