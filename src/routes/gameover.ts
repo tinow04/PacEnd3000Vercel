@@ -11,10 +11,10 @@ router.post('/api/gameover', async (req: Request, res: Response) => {
         levelsWon !== null && levelsWon !== undefined &&
         pillsSwallowed !== null && pillsSwallowed !== undefined) {
         try {
-            /*await db.query(
-                'INSERT INTO scores (player_id ,points, ghosts_eaten, levels_won, pills_swallowed) VALUES (?, ?, ?, ?, ?)',
+            await db.query(
+                'INSERT INTO scores (player_id, points, ghosts_eaten, levels_won, pills_swallowed) VALUES ($1, $2, $3, $4, $5)',
                 [playerID, points, ghostsEaten, levelsWon, pillsSwallowed]
-            );*/
+            );
 
             res.status(200).json({ message: 'Daten empfangen und gespeichert.' });
             console.log('Zeile 17', playerID, points, ghostsEaten, levelsWon, pillsSwallowed);
