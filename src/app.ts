@@ -3,6 +3,8 @@ import cors from "cors"
 import loginRouter from "./routes/login"
 import registerRouter from "./routes/register"
 import gameoverRouter from "./routes/gameover"
+import shopRouter from "./routes/shop"
+
 
 const app = express();
 
@@ -13,6 +15,7 @@ app.use(cors({ origin: 'http://localhost:5173'}))
 app.use(loginRouter);
 app.use(registerRouter);
 app.use(gameoverRouter);
+app.use(shopRouter);
 
 app.get("/", (_, res) => {
     res.send("Hello express");
