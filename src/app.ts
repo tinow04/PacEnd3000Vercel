@@ -3,6 +3,7 @@ import cors from "cors"
 import loginRouter from "./routes/login"
 import registerRouter from "./routes/register"
 import gameoverRouter from "./routes/gameover"
+import mainpageRouter from "./routes/mainpage";
 import shopRouter from "./routes/shop"
 
 
@@ -15,6 +16,7 @@ app.use(cors({ origin: 'http://localhost:5173'}))
 app.use(loginRouter);
 app.use(registerRouter);
 app.use(gameoverRouter);
+app.use(mainpageRouter)
 app.use(shopRouter);
 
 app.get("/", (_, res) => {
