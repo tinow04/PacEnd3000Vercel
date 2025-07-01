@@ -4,8 +4,9 @@ import loginRouter from "./routes/login"
 import registerRouter from "./routes/register"
 import gameoverRouter from "./routes/gameover"
 import mainpageRouter from "./routes/mainpage";
-import shopRouter from "./routes/shop";
 import skinRouter from "./routes/skin";
+import shopRouter from "./routes/shop"
+import profileRouter from "./routes/profile";
 
 
 const app = express();
@@ -20,6 +21,8 @@ app.use(gameoverRouter);
 app.use(mainpageRouter)
 app.use(shopRouter);
 app.use(skinRouter);
+app.use(profileRouter);
+
 
 app.get("/", (_, res) => {
     res.send("Hello express");
