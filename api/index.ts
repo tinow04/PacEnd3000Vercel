@@ -18,7 +18,7 @@ const app = express();
 
 app.use(express.json());
 
-app.use(cors({ origin: 'http://localhost:5173'}))
+app.use(cors({ origin: 'http://localhost:5173'})) // ändern!!
 
 app.use(loginRouter);
 app.use(registerRouter);
@@ -40,3 +40,5 @@ app.get("/", (_, res) => {
 
 app.listen(80);
 console.log("Server started at http://localhost:80");
+
+module.exports = app;
