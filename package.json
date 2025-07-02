@@ -1,6 +1,7 @@
 {
-  "name": "Template_Bun_Elysia",
-  "version": "1.0.50",
+  "name": "my-express-app",
+  "version": "1.0.0",
+  "main": "api/index.ts",
   "scripts": {
     "test": "vitest --ui",
     "test:once": "vitest run",
