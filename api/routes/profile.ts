@@ -37,15 +37,15 @@ router.get(
         }
 
         try {
-            const result = await db.query<ProfileResponse>(
+            const result = await db.query<ProfileResponse[]>(
                 'SELECT username FROM users WHERE id = $1;',
                 [playerID]
             );
-            if (result.rowCount === 0) {
+            if (result.length === 0) {
                 res.status(404).json({ message: 'Benutzer nicht gefunden.' });
                 return;
             }
-            res.status(200).json({ username: result.rows[0].username });
+            res.status(200).json({ username: result[0].username });
         } catch (error) {
             console.error('DB-Error profile GET:', error);
             res.status(500).json({ message: 'Fehler beim Abrufen der Benutzerdaten.' });

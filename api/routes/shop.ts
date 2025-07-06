@@ -21,12 +21,12 @@ router.get('/api/shop', async (req: Request, res: Response) => {
         return;
     } else {
         try {
-            const result = await db.query<CoinsResult>(
+            const result = await db.query<CoinsResult[]>(
                 'SELECT coins AS coins FROM shop WHERE player_id = $1;',
                 [playerID]
             );
-            res.status(200).json(result.rows[0].coins);
-            console.log('Coins für playerID', playerID, ':', result.rows[0].coins);
+            res.status(200).json(result[0].coins);
+            console.log('Coins für playerID', playerID, ':', result[0].coins);
         } catch (error) {
             console.error(error);
             res.status(500).json({ message: 'Fehler beim Abrufen der Daten.' });
@@ -42,12 +42,12 @@ router.post('/api/shop', async (req: Request<unknown, unknown, CoinsRequestBody>
     } else {
         const newCoins = coins - price;
         try {
-            const result = await db.query<CoinsResult>(
+            const result = await db.query<CoinsResult[]>(
                 `UPDATE shop SET coins = $2 WHERE player_id = $1 RETURNING coins;`,
                  [playerID, newCoins]
             );
-            res.status(200).json(result.rows[0].coins);
-            console.log('Coins für playerID', playerID, ':', result.rows[0].coins);
+            res.status(200).json(result[0].coins);
+            console.log('Coins für playerID', playerID, ':', result[0].coins);
         } catch (error) {
             console.error(error);
             res.status(500).json({ message: 'Fehler beim Abrufen der Daten.' });

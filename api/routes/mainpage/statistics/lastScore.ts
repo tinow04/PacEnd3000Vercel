@@ -10,12 +10,12 @@ router.get('/api/homepage/statistics/lastscore', async (req: Request, res: Respo
     const playerID = req.query.playerId;
 
     try {
-        const result = await db.query<queryResult>(
+        const result = await db.query<queryResult[]>(
             'SELECT points AS score FROM scores WHERE player_id = $1 ORDER BY played_at DESC LIMIT 1;',
             [playerID]
         );
-        console.log(result.rows[0].score);
-        res.status(200).json(result.rows[0].score);
+        console.log(result[0].score);
+        res.status(200).json(result[0].score);
 
     } catch (error) {
         console.error(error);

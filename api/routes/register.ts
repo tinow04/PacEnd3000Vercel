@@ -48,13 +48,13 @@ router.post(
             }
 
             // neuen User anlegen
-            const insertUser = await db.query<RegisteredUser>(
+            const insertUser = await db.query<RegisteredUser[]>(
                 `INSERT INTO users (username, email, password)
          VALUES ($1, $2, $3)
          RETURNING id, username, email, created_at AS "createdAt"`,
                 [username, email, password]
             );
-            const newUser = insertUser.rows[0];
+            const newUser = insertUser[0];
 
             await db.query(
                 `INSERT INTO shop (player_id, coins)

@@ -33,19 +33,19 @@ router.post('/api/login', async (
 
     try {
         // Datenbankabfrage
-        const result = await db.query<User>(
+        const result = await db.query<User[]>(
             'SELECT * FROM users WHERE email = $1 AND password = $2',
             [email, password]
         );
 
         // Prüfe ob ein Nutzer gefunden wurde
-        if (result.rowCount === 0) {
+        if (result.length === 0) {
             res.status(401).json({ message: 'Ungültige Anmeldedaten' });
             return;
         }
 
         // Login erfolgreich
-        const user = result.rows[0];
+        const user = result[0];
         res.status(200).json({
             message: 'Login erfolgreich',
             user,

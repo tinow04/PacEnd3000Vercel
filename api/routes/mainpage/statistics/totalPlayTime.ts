@@ -10,11 +10,11 @@ router.get('/api/homepage/statistics/totalplaytime', async (req: Request, res: R
     const playerID = req.query.playerId;
 
     try {
-        const result = await db.query<queryResult>(
+        const result = await db.query<queryResult[]>(
             'SELECT SUM(time_played) AS timeplayed FROM scores WHERE player_id = $1;',
             [playerID]
         );
-        const formattedTime = formatTime(result.rows[0].timeplayed);
+        const formattedTime = formatTime(result[0].timeplayed);
 
         console.log(formattedTime);
         res.status(200).json(formattedTime);

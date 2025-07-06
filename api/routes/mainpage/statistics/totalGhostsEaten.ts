@@ -10,12 +10,12 @@ router.get('/api/homepage/statistics/totalghostseaten', async (req: Request, res
     const playerID = req.query.playerId;
 
     try {
-        const result = await db.query<queryResult>(
+        const result = await db.query<queryResult[]>(
             'SELECT SUM(ghosts_eaten) AS total_ghosts_eaten FROM scores WHERE player_id = $1;',
             [playerID]
         );
-        console.log(result.rows[0].total_ghosts_eaten);
-        res.status(200).json(result.rows[0].total_ghosts_eaten);
+        console.log(result[0].total_ghosts_eaten);
+        res.status(200).json(result[0].total_ghosts_eaten);
 
     } catch (error) {
         console.error(error);

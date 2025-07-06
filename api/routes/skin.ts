@@ -28,11 +28,11 @@ router.get('/api/skin', async (req: Request, res: Response) => {
             console.log(skinID);
             const skin = `skin_${skinID}`;
             const query = `SELECT ${skin} AS unlocked FROM shop WHERE player_id = $1`;
-            const result = await db.query<SkinResult>(
+            const result = await db.query<SkinResult[]>(
                 query, [playerID]
             );
-            res.status(200).json(result.rows[0].unlocked);
-            console.log('Skin für playerID', playerID, 'und skinID', skinID, ':', result.rows[0].unlocked);
+            res.status(200).json(result[0].unlocked);
+            console.log('Skin für playerID', playerID, 'und skinID', skinID, ':', result[0].unlocked);
         } catch (error) {
             console.error(error);
             res.status(500).json({ message: 'Fehler beim Abrufen der Daten.' });

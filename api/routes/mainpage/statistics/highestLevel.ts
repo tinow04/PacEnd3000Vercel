@@ -10,12 +10,12 @@ router.get('/api/homepage/statistics/highestlevel', async (req: Request, res: Re
     const playerID = req.query.playerId;
 
     try {
-        const result = await db.query<queryResult>(
+        const result = await db.query<queryResult[]>(
             'SELECT MAX(levels_won) + 1 AS highest_level FROM scores WHERE player_id = $1;',
             [playerID]
         );
-        console.log(result.rows[0].highest_level);
-        res.status(200).json(result.rows[0].highest_level);
+        console.log(result[0].highest_level);
+        res.status(200).json(result[0].highest_level);
 
     } catch (error) {
         console.error(error);

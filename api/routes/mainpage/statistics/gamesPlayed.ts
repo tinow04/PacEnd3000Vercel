@@ -10,12 +10,12 @@ router.get('/api/homepage/statistics/gamesplayed', async (req: Request, res: Res
     const playerID = req.query.playerId;
 
     try {
-        const result = await db.query<queryResult>(
+        const result = await db.query<queryResult[]>(
             'SELECT COUNT(player_id) AS games_played FROM scores WHERE player_id = $1;',
             [playerID]
         );
-        console.log(result.rows[0].games_played);
-        res.status(200).json(result.rows[0].games_played);
+        console.log(result[0].games_played);
+        res.status(200).json(result[0].games_played);
 
     } catch (error) {
         console.error(error);
