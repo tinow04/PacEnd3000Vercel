@@ -38,6 +38,6 @@ app.get("/", (_, res) => {
     res.send("Hello express");
 });
 
-console.log("Server started at http://localhost:80");
+console.log("Server started by vercel");
 
 module.exports = app;
