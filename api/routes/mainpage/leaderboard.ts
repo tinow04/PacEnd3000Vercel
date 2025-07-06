@@ -19,6 +19,10 @@ interface userDetail {
 router.get('/api/homepage/leaderboard', async (req: Request, res: Response) => {
     const rankIDRaw = req.query.rankID;
 
+    const origin = req.headers.origin;
+
+    console.log("Origin: ", origin);
+
     if (typeof rankIDRaw !== 'string') {
         res.status(400).json({ message: 'rankID fehlt oder ist ungültig.' });
         return;
