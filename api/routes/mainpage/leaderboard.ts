@@ -35,18 +35,18 @@ router.get('/api/homepage/leaderboard', async (req: Request, res: Response) => {
     const rankIDMinusOne = rankID - 1;
 
     try {
-        const resultPoints = await db.query<leaderboardScore>(
+        const resultPoints = await db.query<leaderboardScore[]>(
             'SELECT player_id, points FROM scores ORDER BY points DESC OFFSET $1 LIMIT 1;',
             [rankIDMinusOne]
         );
 
-        playerid = resultPoints.rows[0].player_id;
+        playerid = resultPoints[0].player_id;
 
-        const resultUsername = await db.query<userDetail>(
+        const resultUsername = await db.query<userDetail[]>(
             'SELECT username FROM users WHERE id = $1',
             [playerid]
         );
-        res.status(200).json({ score: resultPoints.rows[0].points, name: resultUsername.rows[0].username });
+        res.status(200).json({ score: resultPoints[0].points, name: resultUsername[0].username });
 
     } catch (error) {
         console.error(error);
