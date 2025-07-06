@@ -18,7 +18,7 @@ const app = express();
 
 app.use(express.json());
 
-app.use(cors({ origin: 'https://tinow04.github.io/Pillenschlucker3000/'})) // ändern!!
+app.use(cors({ origin: 'https://tinow04.github.io/Pillenschlucker3000/'}))
 
 app.use(loginRouter);
 app.use(registerRouter);
